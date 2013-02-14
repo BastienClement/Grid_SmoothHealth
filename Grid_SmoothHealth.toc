@@ -1,5 +1,8 @@
 ## Interface: 50100
 ## Title: Grid SmoothHealth
 ## Notes: Smoothly animates health bars on Grid.
+## Author: Galedric
+## Version: 1.0
+## Dependencies: Grid
 
 Grid_SmoothHealth.lua
