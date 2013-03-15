@@ -2,5 +2,10 @@
 ## Title: Grid SmoothHealth
 ## Notes: Smoothly animates health bars on Grid.
 ## Dependencies: Grid
+## OptionalDeps: LibSmoothStatusBar-1.0
+
+#@no-lib-strip@
+LibSmoothStatusBar-1.0\LibSmoothStatusBar-1.0.lua
+#@end-no-lib-strip@
 
 Grid_SmoothHealth.lua

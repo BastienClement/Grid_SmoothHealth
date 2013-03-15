@@ -1,2 +1,2 @@
-ignore:
-	- .git
+externals:
+	LibSmoothStatusBar-1.0: git://git.curseforge.net/wow/libsmoothstatusbar-1-0/mainline.git

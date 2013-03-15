@@ -1,62 +1,35 @@
--- Port of oUF Smooth Update by Xuerian for Grid
--- http://www.wowinterface.com/downloads/info11503-oUFSmoothUpdate.html
+--[[
+	Copyright (c) 2013 Bastien Clément
 
-if not Grid or not Grid.GetModule then
+	Permission is hereby granted, free of charge, to any person obtaining a
+	copy of this software and associated documentation files (the
+	"Software"), to deal in the Software without restriction, including
+	without limitation the rights to use, copy, modify, merge, publish,
+	distribute, sublicense, and/or sell copies of the Software, and to
+	permit persons to whom the Software is furnished to do so, subject to
+	the following conditions:
+
+	The above copyright notice and this permission notice shall be included
+	in all copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+	OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+	IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+]]
+
+if not Grid then
 	return
 end
 
+local LibSmooth = LibStub("LibSmoothStatusBar-1.0")
 local GridFrame = Grid:GetModule("GridFrame")
 
-if not GridFrame then
-	return
-end
-
-local smoothing = {}
-local function Smooth(self, value)
-	local _, max = self:GetMinMaxValues()
-	if value == self:GetValue() or (self._max and self._max ~= max) then
-		smoothing[self] = nil
-		self:SetValue_(value)
-	else
-		smoothing[self] = value
-	end
-	self._max = max
-end
-
-local function SmoothBar(bar)
-	if not bar.SetValue_ then
-		bar.SetValue_ = bar.SetValue;
-		bar.SetValue = Smooth;
-	end
-end
-
-local function ResetBar(bar)
-	if bar.SetValue_ then
-		bar.SetValue = bar.SetValue_;
-		bar.SetValue_ = nil;
-	end
-end
-
-local f, min, max = CreateFrame('Frame'), math.min, math.max
-f:SetScript('OnUpdate', function()
-	local limit = 30/GetFramerate()
-	for bar, value in pairs(smoothing) do
-		local cur = bar:GetValue()
-		local new = cur + min((value-cur)/3, max(value-cur, limit))
-		if new ~= new then
-			-- Mad hax to prevent QNAN.
-			new = value
-		end
-		bar:SetValue_(new)
-		if (cur == value or abs(new - value) < 2) then
-			bar:SetValue_(value)
-			smoothing[bar] = nil	
-		end
-	end
-end)
-
 local function InitializeFrame(self, frame)
-	SmoothBar(frame.Bar)
+	LibSmooth:SmoothBar(frame.Bar)
 end
 
 hooksecurefunc(GridFrame, "InitializeFrame", InitializeFrame)
