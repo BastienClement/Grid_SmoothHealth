@@ -1,4 +1,4 @@
-## Interface: 50400
+## Interface: 60000
 ## Title: Grid SmoothHealth
 ## Notes: Smoothly animates health bars on Grid.
 ## Dependencies: Grid
