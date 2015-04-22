@@ -29,7 +29,7 @@ local LibSmooth = LibStub("LibSmoothStatusBar-1.0")
 local GridFrame = Grid:GetModule("GridFrame")
 
 local function InitializeFrame(self, frame)
-	LibSmooth:SmoothBar(frame.Bar)
+	LibSmooth:SmoothBar(frame.indicators.bar)
 end
 
 hooksecurefunc(GridFrame, "InitializeFrame", InitializeFrame)
